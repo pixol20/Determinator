@@ -1,8 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template
 import model
 app = Flask(__name__)
-model.LoadModel()
-model.GenerateText()
+# model.LoadModel()
 @app.route("/")
 def index():
-    return "Hello World"
+    return render_template("index.html")

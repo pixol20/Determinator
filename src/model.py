@@ -44,6 +44,7 @@ def GenerateText(word=None):
                                                    return_tensors="pt").to("cuda")
     GeneratedIds = model.generate(tokenized_chat, max_new_tokens=250)
     output = tokenizer.batch_decode(GeneratedIds, skip_special_tokens=True)[0]
+    output = output[1241:]
     print(output)
     return output
 

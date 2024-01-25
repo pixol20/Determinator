@@ -1,0 +1,54 @@
+/* Font from Determination by anonymous-1438277 from fontstruct */
+@font-face {
+    font-family: Determination;
+    src: url('../static/determination.otf');
+}
+
+body
+{
+    background-color:black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#ButtonTextContainer
+{
+    padding: 40vh;
+}
+
+#save
+{
+    display: flex;
+    text-align: center;
+    font-family: Determination;
+    font-size: 70px;
+    border: 5px solid #292929;
+    background-color: black;
+    color: white;
+}
+
+#save:hover
+{
+    display: flex;
+    text-align: center;
+    font-family: Determination;
+    font-size: 70px;
+    border: 5px solid rgb(255, 255, 255);
+    background-color: black;
+    color: white;
+}
+
+#determinationIcon
+{
+    width: 80px;
+    height: 80px;
+    padding: 0;
+}
+
+#textPlaceholder
+{
+    font-size: 50px;
+    color: white;
+    font-family: Determination;
+}

@@ -1,2 +1,2 @@
 # Determinator
- An undertale-styled quote generator using LLM
+ An undertale-styled quote generator website that uses LLM

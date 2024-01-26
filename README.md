@@ -23,3 +23,10 @@ You'll need python for this. My version is 3.10.6
  
  ## Showcase
  ![showcase](https://github.com/pixol20/Determinator/assets/115364463/0c52a5ca-c55e-4c3a-b550-4f0fa96789e8)
+## Other info
+Undertale is a game created by Toby Fox
+
+I used [this font](https://fontstruct.com/fontstructions/show/2368299/determination-40)
+
+
+This is cs50 final project

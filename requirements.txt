@@ -1,3 +1,4 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
 accelerate==0.26.1
 bitsandbytes>=0.39.0 --index-url=https://jllllll.github.io/bitsandbytes-windows-webui
 blinker==1.7.0
@@ -35,9 +36,9 @@ safetensors==0.4.2
 scipy==1.12.0
 sympy==1.12
 tokenizers==0.15.1
-torch==2.1.2+cu121
-torchaudio==2.1.2+cu121
-torchvision==0.16.2+cu121
+torch
+torchvision
+torchaudio
 tqdm==4.66.1
 transformers==4.37.1
 typing_extensions==4.9.0

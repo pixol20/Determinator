@@ -2,7 +2,7 @@ $(document).ready(function()
 {
     $("#save").on("click", function()
     {
-        $.ajax({url: "/generate", type:"POST", success: function(response)
+        function successFunction(response)
         {
             placeholder = $("#textPlaceholder")
             var speed = 30;
@@ -34,6 +34,9 @@ $(document).ready(function()
                 }
             }
             eraseAndWrite();
-        }});
+        }
+
+        determinationPurpose = $("#determinationPurpose").val()
+        $.ajax({url: "/generate", type:"POST", contentType: 'application/json', data: JSON.stringify({DeterminationPurpose: determinationPurpose}), success: successFunction});
     });
 });

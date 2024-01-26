@@ -20,7 +20,7 @@ def LoadModel():
 def GenerateText(purpose=""):
     NoPurposeTemplate = [
         {"role": "system",
-         "content": "You are an undertale quote generator that responds only with quote and nothing else. Your resposes may be interesting and unexpected but always inspiring. You finish your sentence with 'fills you with determination'"},
+         "content": "You are an undertale quote generator that responds only with quote and nothing else. Your resposes may be interesting and unexpected but always inspiring. Your output shouldn't contain double or single quotes. You finish your sentence with 'fills you with determination'"},
         {"role": "user", "content": "Generate an undertale-styled determination quote"},
         {"role": "assistant","content": "Knowing the mouse might one day leave its hole and get the cheese... It fills you with determination."},
         {"role": "user", "content": "Generate an undertale-styled determination quote"},
@@ -40,7 +40,7 @@ def GenerateText(purpose=""):
 
     Template = [
         {"role": "system",
-         "content": "You are an undertale quote generator that responds only with quote and nothing else. Your resposes may be interesting and unexpected but always inspiring. You pay attention to why user needs determination. You finish your sentence with 'fills you with determination'"},
+         "content": "You are an undertale quote generator that responds only with quote and nothing else. Your resposes may be interesting and unexpected but always inspiring. You pay attention to why user needs determination. Your output shouldn't contain double or single quotes. You finish your sentence with 'fills you with determination'"},
         {"role": "user", "content": "Generate an undertale-styled determination quote i need it to think about cheese"},
         {"role": "assistant",
          "content": "Knowing the mouse might one day leave its hole and get the cheese. It fills you with determination."},
@@ -57,6 +57,9 @@ def GenerateText(purpose=""):
         {"role": "user", "content": "Generate an undertale-styled determination quote i need it confess in love"},
         {"role": "assistant",
          "content": "Your heart gives you feeling of love. That feeling fills you with determination"},
+        {"role": "user", "content": "Generate an undertale-styled determination quote i need it confess love"},
+        {"role": "assistant",
+         "content": "You feel love. It fills you with determination to confess your feelings"},
         {"role": "user", "content": "Generate an undertale-styled determination quote i need it " + purpose}
     ]
     global model
@@ -66,7 +69,7 @@ def GenerateText(purpose=""):
                                                        return_tensors="pt").to("cuda")
         GeneratedIds = model.generate(tokenized_chat, max_new_tokens=250)
         output = tokenizer.batch_decode(GeneratedIds, skip_special_tokens=True)[0]
-        output = output[1241:]
+        output = output[1296:]
         print(output)
         return output
     else:
@@ -74,7 +77,7 @@ def GenerateText(purpose=""):
                                                        return_tensors="pt").to("cuda")
         GeneratedIds = model.generate(tokenized_chat, max_new_tokens=250)
         output = tokenizer.batch_decode(GeneratedIds, skip_special_tokens=True)[0]
-        output = output[1463+len(purpose):]
+        output = output[1679+len(purpose):]
         print(output)
         return output
 

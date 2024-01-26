@@ -17,7 +17,10 @@ def LoadModel():
     model = AutoModelForCausalLM.from_pretrained(ModelLocation, device_map="auto", quantization_config=BNBConfig, max_memory={0: '8000Mib', "cpu": '30Gib'})
     tokenizer = AutoTokenizer.from_pretrained(ModelLocation, padding_side="left")
 
+
+# Text generation happens here
 def GenerateText(purpose=""):
+
     NoPurposeTemplate = [
         {"role": "system",
          "content": "You are an undertale quote generator that responds only with quote and nothing else. Your resposes may be interesting and unexpected but always inspiring. Your output shouldn't contain double or single quotes. You finish your sentence with 'fills you with determination'"},
@@ -62,6 +65,7 @@ def GenerateText(purpose=""):
          "content": "You feel love. It fills you with determination to confess your feelings"},
         {"role": "user", "content": "Generate an undertale-styled determination quote i need it " + purpose}
     ]
+
     global model
     global tokenizer
     if purpose == "":
@@ -69,15 +73,18 @@ def GenerateText(purpose=""):
                                                        return_tensors="pt").to("cuda")
         GeneratedIds = model.generate(tokenized_chat, max_new_tokens=250)
         output = tokenizer.batch_decode(GeneratedIds, skip_special_tokens=True)[0]
+
+        # output contains template, it gets cutted here. The value 1296 is hardcoded and you should change
+        # it if you want to change template
         output = output[1296:]
-        print(output)
         return output
     else:
         tokenized_chat = tokenizer.apply_chat_template(Template, tokenize=True, add_generation_prompt=True,
                                                        return_tensors="pt").to("cuda")
         GeneratedIds = model.generate(tokenized_chat, max_new_tokens=250)
         output = tokenizer.batch_decode(GeneratedIds, skip_special_tokens=True)[0]
+        # output contains template, it gets cutted here. The value 1679 is hardcoded and you should change
+        # it if you want to change template
         output = output[1679+len(purpose):]
-        print(output)
         return output
 

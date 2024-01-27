@@ -1,5 +1,6 @@
 import sys
 
+import csv
 from flask import Flask, render_template, request, Response, session
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -15,6 +16,7 @@ limiter = Limiter(
 )
 app.secret_key = "£<0Bu_k+£yj/SM[WvQf&HD.k<£j8[pHkY$sMBs+GwKr4=!e;22DETERMINATION"
 # model.LoadModel()
+model.LoadModel()
 
 
 @app.route("/")

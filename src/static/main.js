@@ -1,12 +1,27 @@
 $(document).ready(function()
 {
+    var sendPreferencesRequest = true;
     var TurnedSound = false;
     var sendGenerationsBox = $("#sendGenerations");
     var saveSound = new Audio("../static/savepoint.mp3");
     var typeSound = new Audio("../static/voice.mp3");
     var BGMusic = new Audio("../static/home.ogg");
     BGMusic.loop = true;
-    
+
+    $.ajax({url: "/preferences", type: "POST", contentType: "application/json", data: JSON.stringify({intent: "get"}), success: function(response)
+    {
+        if (response === "False")
+        {
+            sendGenerationsBox.prop("checked", false); 
+        }
+        else
+        {
+            sendGenerationsBox.prop("checked", true); 
+        }
+        sendPreferencesRequest = false;
+    }});
+
+    //#region SAVEButton
     $("#save").on("click", function()
     {
         saveSound.play();
@@ -53,7 +68,9 @@ $(document).ready(function()
         determinationPurpose = $("#determinationPurpose").val()
         $.ajax({url: "/generate", type:"POST", contentType: 'application/json', data: JSON.stringify({DeterminationPurpose: determinationPurpose}), success: successFunction});
     });
-
+    //#endregion
+    
+    //#region soundButton 
     $("#soundButton").on("click", function()
     {
         if (TurnedSound === false)
@@ -70,6 +87,9 @@ $(document).ready(function()
 
         }
     })
+    //#endregion
+
+
 
 
     sendGenerationsBox.change(function()

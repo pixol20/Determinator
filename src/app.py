@@ -12,7 +12,7 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 app.secret_key = "£<0Bu_k+£yj/SM[WvQf&HD.k<£j8[pHkY$sMBs+GwKr4=!e;22DETERMINATION"
-# model.LoadModel()
+model.LoadModel()
 
 
 @app.route("/")

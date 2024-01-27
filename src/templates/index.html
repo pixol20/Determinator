@@ -15,7 +15,16 @@
             <div class="inputContainer">
                 <input class="textInput" id="determinationPurpose" type="text" placeholder="What do you need determination for?">
             </div>
-            <button id="save">SAVE<img id="determinationIcon" src="../static/determination.png"></button>
+            <button id="save" type="button">SAVE<img alt="undertale save icon" id="determinationIcon" src="../static/determination.png"></button>
+            <div id="didYouLikeOutputContainer">
+                <h4>Did you like the output?</h4>
+                <button type="button" id="like" class="ratingButton"><img src="../static/heartundertale.png" alt="heart" class="heartIcon"></button>
+                <button type="button" id="dislike" class="ratingButton"><img src="../static/brokenheartundertale.png" alt="broken heart" class="heartIcon"></button>
+            </div>
+            <div id="sendGenerationsQuestionContainer">
+                <h4>Do you wish to rate and send generations anonymously to improve model?</h4>
+                <input type="checkbox" id="sendGenerations">
+            </div>
         </div>
     </body>
 </html>

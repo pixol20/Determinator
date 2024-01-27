@@ -47,9 +47,14 @@ body
     padding: 0;
 }
 
+#didYouLikeOutputContainer
+{
+    display: none;
+}
+
 #sendGenerationsQuestionContainer
 {
-    padding-top: 20vh;
+    padding-top: 15vh;
 }
 
 #textPlaceholder
@@ -64,6 +69,32 @@ body
     width: 2em;
     height: 2rem;
 }
+#soundButton
+{
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+.button
+{
+    border: 5px solid #292929;
+    color: white;
+    background-color: rgba(0, 0, 0,0);
+}
+
+.button:hover
+{
+    border: 5px solid white;
+}
+
+
+#soundIcon
+{
+    width: 60px;
+    height: 60px;
+}
+
 
 .heartIcon
 {
@@ -73,20 +104,8 @@ body
 
 
 
-.ratingButton
-{
-    width: 70px;
-    height: 70px;
-    border: 5px solid #292929;
-    background-color: black;
-    color: white;
-    background-color: rgba(0, 0, 0,0);
-}
 
-.ratingButton:hover
-{
-    border: 5px solid #ffffff;
-}
+
 
 .inputContainer
 {

@@ -1,16 +1,12 @@
 $(document).ready(function()
 {
-    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    var music = new Audio("../static/home.ogg");
-
-    // Create a source node from the audio element
-    var sourceNode = audioContext.createMediaElementSource(music);
-    // Connect the source node to the audio context
-    sourceNode.connect(audioContext.destination);
-    music.loop = true;
-    music.play();
+    var TurnedSound = false;
+    var sendGenerationsBox = $("#sendGenerations");
     var saveSound = new Audio("../static/savepoint.mp3");
     var typeSound = new Audio("../static/voice.mp3");
+    var BGMusic = new Audio("../static/home.ogg");
+    BGMusic.loop = true;
+    
     $("#save").on("click", function()
     {
         saveSound.play();
@@ -57,4 +53,35 @@ $(document).ready(function()
         determinationPurpose = $("#determinationPurpose").val()
         $.ajax({url: "/generate", type:"POST", contentType: 'application/json', data: JSON.stringify({DeterminationPurpose: determinationPurpose}), success: successFunction});
     });
+
+    $("#soundButton").on("click", function()
+    {
+        if (TurnedSound === false)
+        {
+            $("#soundIcon").attr("src","../static/soundicon.png");
+            TurnedSound = true
+            BGMusic.play();
+        }
+        else
+        {
+            $("#soundIcon").attr("src","../static/turnedoffsoundicon.png");
+            TurnedSound = false;
+            BGMusic.pause();
+
+        }
+    })
+
+
+    sendGenerationsBox.change(function()
+    {
+        if (sendGenerationsBox.prop("checked"))
+        {
+            $("#didYouLikeOutputContainer").show();
+        }
+        else
+        {
+            $("#didYouLikeOutputContainer").hide();
+        }
+    });
+
 });

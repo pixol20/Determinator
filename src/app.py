@@ -1,6 +1,4 @@
 import sys
-
-import csv
 from flask import Flask, render_template, request, Response, session
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -15,8 +13,8 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 app.secret_key = "£<0Bu_k+£yj/SM[WvQf&HD.k<£j8[pHkY$sMBs+GwKr4=!e;22DETERMINATION"
-# model.LoadModel()
 model.LoadModel()
+
 
 
 @app.route("/")
@@ -31,7 +29,6 @@ def generate():
     purpose = data["DeterminationPurpose"]
 
 
-
     if purpose == "":
         return Response(model.GenerateText(), 200)
     else:
@@ -39,6 +36,7 @@ def generate():
             return Response(model.GenerateText(purpose), 200)
         else:
             return Response("Your input contains non english characters", 400)
+
 
 
 @app.route("/preferences", methods=["POST"])

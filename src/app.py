@@ -1,3 +1,5 @@
+import sys
+
 from flask import Flask, render_template, request, Response, session
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -12,7 +14,7 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 app.secret_key = "£<0Bu_k+£yj/SM[WvQf&HD.k<£j8[pHkY$sMBs+GwKr4=!e;22DETERMINATION"
-model.LoadModel()
+# model.LoadModel()
 
 
 @app.route("/")
@@ -56,4 +58,13 @@ def preferences():
         else:
             session["SendData"] = False
         return Response(str(SendData), 200)
-    return Response("", 204)
+    else:
+        PreferenceData = None
+        try:
+            PreferenceData = data["sendData"]
+        except:
+            return Response("Wrong data sent", 400)
+
+        session["SendData"] = PreferenceData
+        return Response("", 204)
+    return Response("", 500)

@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-    var sendPreferencesRequest = true;
     var TurnedSound = false;
     var sendGenerationsBox = $("#sendGenerations");
     var saveSound = new Audio("../static/savepoint.mp3");
@@ -8,6 +7,7 @@ $(document).ready(function()
     var BGMusic = new Audio("../static/home.ogg");
     BGMusic.loop = true;
 
+    //#region readPreferences
     $.ajax({url: "/preferences", type: "POST", contentType: "application/json", data: JSON.stringify({intent: "get"}), success: function(response)
     {
         if (response === "False")
@@ -16,10 +16,11 @@ $(document).ready(function()
         }
         else
         {
+            $("#didYouLikeOutputContainer").show();
             sendGenerationsBox.prop("checked", true); 
         }
-        sendPreferencesRequest = false;
     }});
+    //#endregion
 
     //#region SAVEButton
     $("#save").on("click", function()
@@ -94,7 +95,8 @@ $(document).ready(function()
 
     sendGenerationsBox.change(function()
     {
-        if (sendGenerationsBox.prop("checked"))
+        var checkboxChecked = sendGenerationsBox.prop("checked");
+        if (checkboxChecked)
         {
             $("#didYouLikeOutputContainer").show();
         }
@@ -102,6 +104,9 @@ $(document).ready(function()
         {
             $("#didYouLikeOutputContainer").hide();
         }
+
+        $.ajax({url: "/preferences", type: "POST", contentType: "application/json", data: JSON.stringify({intent: "set", sendData: checkboxChecked})});
+
     });
 
 });

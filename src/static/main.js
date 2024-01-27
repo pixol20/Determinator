@@ -1,14 +1,23 @@
 $(document).ready(function()
 {
-    saveSound = new Audio("../static/savepoint.mp3");
-    typeSound = new Audio("../static/voice.mp3")
+    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    var music = new Audio("../static/home.ogg");
+
+    // Create a source node from the audio element
+    var sourceNode = audioContext.createMediaElementSource(music);
+    // Connect the source node to the audio context
+    sourceNode.connect(audioContext.destination);
+    music.loop = true;
+    music.play();
+    var saveSound = new Audio("../static/savepoint.mp3");
+    var typeSound = new Audio("../static/voice.mp3");
     $("#save").on("click", function()
     {
         saveSound.play();
         
         function successFunction(response)
         {
-            placeholder = $("#textPlaceholder")
+            var placeholder = $("#textPlaceholder")
             var speed = 30;
             var letterIndex = 0;
             typeSound.play();

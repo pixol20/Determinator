@@ -25,12 +25,10 @@ def index():
 
 @app.route("/generate", methods=["POST"])
 def generate():
-    purpose = ""
     data = request.get_json()
-    try:
-        purpose = data["DeterminationPurpose"]
-    except:
-        return Response("Wrong data sent", 400)
+    purpose = data["DeterminationPurpose"]
+
+
 
     if purpose == "":
         return Response(model.GenerateText(), 200)
@@ -45,12 +43,9 @@ def generate():
 @limiter.exempt()
 def preferences():
     SendData = False
-    intent = ""
     data = request.get_json()
-    try:
-        intent = data["intent"]
-    except:
-        return Response("Wrong data sent", 400)
+    intent = data["intent"]
+
 
     if intent == "get":
         if "SendData" in session:
@@ -59,12 +54,7 @@ def preferences():
             session["SendData"] = False
         return Response(str(SendData), 200)
     else:
-        PreferenceData = None
-        try:
-            PreferenceData = data["sendData"]
-        except:
-            return Response("Wrong data sent", 400)
-
+        PreferenceData = data["sendData"]
         session["SendData"] = PreferenceData
         return Response("", 204)
     return Response("", 500)

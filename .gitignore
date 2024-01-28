@@ -156,3 +156,9 @@ cython_debug/
 models/*
 !models
 !models/PutYourModelsHere.txt
+
+
+#Log
+GenerationsLog/*
+!GenerationsLog
+!GenerationsLog/YourGenerationDataWillBeSavedHere.txt

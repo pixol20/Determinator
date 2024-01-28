@@ -77,6 +77,9 @@ def GenerateText(purpose=""):
         # output contains template, it gets cutted here. The value 1296 is hardcoded and you should change
         # it if you want to change template
         output = output[1296:]
+
+        # Remove all | because it will be used as delimiter in csv
+        output = output.replace("|", "")
         return output
     else:
         tokenized_chat = tokenizer.apply_chat_template(Template, tokenize=True, add_generation_prompt=True,
@@ -86,5 +89,8 @@ def GenerateText(purpose=""):
         # output contains template, it gets cutted here. The value 1679 is hardcoded and you should change
         # it if you want to change template
         output = output[1679+len(purpose):]
+
+        # Remove all | because it will be used as delimiter in csv
+        output = output.replace("|", "")
         return output
 

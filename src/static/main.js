@@ -1,11 +1,19 @@
 $(document).ready(function()
 {
-    var TurnedSound = false;
+    //#region globalVariables
+    var alreadyRated = false;
+    var generated = false;
+    var turnedSound = false;
+    var placeholder = $("#textPlaceholder");
+    didYouLikeOutputContainer = $("#didYouLikeOutputContainer");
     var sendGenerationsBox = $("#sendGenerations");
+    var likeButton = $("#like")
+    var dislikeButton = $("#dislike")
     var saveSound = new Audio("../static/savepoint.mp3");
     var typeSound = new Audio("../static/voice.mp3");
     var BGMusic = new Audio("../static/home.ogg");
     BGMusic.loop = true;
+    //#endregion
 
     //#region readPreferences
     $.ajax({url: "/preferences", type: "POST", contentType: "application/json", data: JSON.stringify({intent: "get"}), success: function(response)
@@ -16,7 +24,6 @@ $(document).ready(function()
         }
         else
         {
-            $("#didYouLikeOutputContainer").show();
             sendGenerationsBox.prop("checked", true); 
         }
     }});
@@ -29,7 +36,7 @@ $(document).ready(function()
         
         function successFunction(response)
         {
-            var placeholder = $("#textPlaceholder")
+            generated = true;
             var speed = 30;
             var letterIndex = 0;
             typeSound.play();
@@ -38,7 +45,6 @@ $(document).ready(function()
             {
                 var textContent = placeholder.text();
                 var textLength = textContent.length;
-            
                 var interval = setInterval(function() {
                         textLength--;
                         placeholder.text(textContent.substr(0, textLength));
@@ -62,9 +68,15 @@ $(document).ready(function()
                 {
                     typeSound.pause();
                     typeSound.currentTime = 0;
+                    alreadyRated = false;
+                    if(sendGenerationsBox.prop("checked"))
+                    {
+                        didYouLikeOutputContainer.show();
+                    }
                 }
             }
             eraseAndWrite();
+            
         }
         determinationPurpose = $("#determinationPurpose").val()
         $.ajax({url: "/generate", type:"POST", contentType: 'application/json', data: JSON.stringify({DeterminationPurpose: determinationPurpose}), success: successFunction});
@@ -74,39 +86,57 @@ $(document).ready(function()
     //#region soundButton 
     $("#soundButton").on("click", function()
     {
-        if (TurnedSound === false)
+        if (turnedSound === false)
         {
             $("#soundIcon").attr("src","../static/soundicon.png");
-            TurnedSound = true
+            turnedSound = true
             BGMusic.play();
         }
         else
         {
             $("#soundIcon").attr("src","../static/turnedoffsoundicon.png");
-            TurnedSound = false;
+            turnedSound = false;
             BGMusic.pause();
 
         }
     })
     //#endregion
 
-
-
-
+    //#region sendGenerationsBox
     sendGenerationsBox.change(function()
     {
         var checkboxChecked = sendGenerationsBox.prop("checked");
         if (checkboxChecked)
         {
-            $("#didYouLikeOutputContainer").show();
+            // Checks if we generated output before changing checkbox state
+            if(generated && !(alreadyRated))
+            {
+                didYouLikeOutputContainer.show();
+            }
         }
         else
         {
-            $("#didYouLikeOutputContainer").hide();
+            didYouLikeOutputContainer.hide();
         }
 
         $.ajax({url: "/preferences", type: "POST", contentType: "application/json", data: JSON.stringify({intent: "set", sendData: checkboxChecked})});
 
     });
+    //#endregion
 
+    //#region rating
+    likeButton.on("click", function()
+    {
+        $.ajax({url: "/rate", type: "POST", contentType: "application/json", data: JSON.stringify({rate: "like"})});
+        didYouLikeOutputContainer.hide();
+        alreadyRated = true;
+    });
+
+    dislikeButton.on("click", function()
+    {
+        $.ajax({url: "/rate", type: "POST", contentType: "application/json", data: JSON.stringify({rate: "dislike"})});
+        didYouLikeOutputContainer.hide();
+        alreadyRated = true;
+    })
+    //#endregion
 });

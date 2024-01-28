@@ -44,11 +44,13 @@ def generate():
     output = ""
     data = request.get_json()
     purpose = data["DeterminationPurpose"]
+    purpose.replace("|", "")
     if len(purpose) > 250:
         return Response("too long, maximum 250 characters", 400)
 
     if purpose == "":
         output = model.GenerateText()
+        # Save data to session to write that and rating later into CSV file
         session["LastPurpose"] = purpose
         session["LastOutput"] = output
         session["AlreadyRated"] = False

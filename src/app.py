@@ -48,14 +48,14 @@ def generate():
         return Response("too long, maximum 250 characters", 400)
 
     if purpose == "":
+        output = model.GenerateText()
         session["LastPurpose"] = purpose
         session["LastOutput"] = output
         session["AlreadyRated"] = False
-        return Response(model.GenerateText(), 200)
+        return Response(output, 200)
     else:
         if purpose.isascii():
             output = model.GenerateText(purpose)
-
             # Save data to session to write that and rating later into CSV file
             session["LastPurpose"] = purpose
             session["LastOutput"] = output

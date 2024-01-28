@@ -45,9 +45,12 @@ def generate():
     data = request.get_json()
     purpose = data["DeterminationPurpose"]
     if len(purpose) > 250:
-        return Response("too long purpose", 400)
+        return Response("too long, maximum 250 characters", 400)
 
     if purpose == "":
+        session["LastPurpose"] = purpose
+        session["LastOutput"] = output
+        session["AlreadyRated"] = False
         return Response(model.GenerateText(), 200)
     else:
         if purpose.isascii():

@@ -44,7 +44,7 @@ def generate():
     output = ""
     data = request.get_json()
     purpose = data["DeterminationPurpose"]
-    purpose.replace("|", "")
+    purpose = purpose.replace("|", "")
     if len(purpose) > 250:
         return Response("too long, maximum 250 characters", 400)
 
